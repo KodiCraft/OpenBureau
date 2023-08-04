@@ -6,7 +6,7 @@
 
 # Export the default environment variables we want to use
 export NO_REPL=true
-export LOG_TAG="[OpenBureau]"
+export LOG_TAG="OpenBureau"
 
 if [ "$OBD_WLS" = "true" ]; then
     # Make sure that BUREAU_HOST is set to a valid host
@@ -31,8 +31,8 @@ if [ "$OBD_WLS" = "true" ]; then
         exit 1
     fi
 
-    exec "npm run wls"
+    exec npm run wls
 else
     # Start the server as a normal bureau
-    exec "npm run bureau"
+    exec npm run bureau
 fi
