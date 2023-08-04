@@ -1,0 +1,23 @@
+# This is an example docker-compose file for running the OpenBureau server
+# Feel free to modify it for your own needs
+
+services:
+  openbureau:
+    image: openbureau:latest
+    ports:
+      - 5125-5158:5125-5158 # ALL of these ports are required for OpenBureau in WLS mode.
+      # - 5125:5125 # Uncomment this line if you want to run OpenBureau in non-WLS mode and don't want to expose all ports
+    volumes:
+      - /app/banlist.txt:${PWD}/banlist.txt # This is the file where the banlist will be stored
+    environment:
+      - OBD_WLS=true # Remove this to disable WLS mode
+      # Required configuration for WLS mode:
+      - BUREAU_HOST=127.0.0.1 # Set this to the public IP or hostname of your server to make the server accessible from the outside.
+      - WORLD_WHITELIST=["SAPARi COAST MIL.", "SAPARi PARK MIL."] # Set this to the worlds that should be allowed.
+      # Optional configuration:
+      - MAX_CONN=100 # Maximum number of connections. Only applies in WLS mode.
+      - CLIENT_TIMEOUT=10000 # Maximum time in milliseconds that a client can be inactive before being disconnected.
+      - NO_MULTI= # Set this to true to disallow multiple connections from the same IP address.
+      - BUREAU_TIMEOUT=30000 # Maximum time in milliseconds that a bureau can be inactive before being disconnected. Only applies in WLS mode.
+      - MAX_BUREAU=32 # Maximum amount of bureaus that can run at the same time. Only applies in WLS mode. The docker image is limited to 32!
+      - VERBOSE= # Set this to true to enable verbose logging.
