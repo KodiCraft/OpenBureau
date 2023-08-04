@@ -3,3 +3,6 @@
 /banlist.txt
 /config.txt
 /config-wls.txt
+
+# pnpm-lock.yaml should be ignored because we expect to use npm for version-sensitive installs
+pnpm-lock.yaml 
