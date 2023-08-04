@@ -15,12 +15,20 @@ if [ "$OBD_WLS" = "true" ]; then
         echo "[./start.sh] Please set the BUREAU_HOST environment variable to a URL leading to this server."
         exit 1
     fi
-    # Set the port environment variables to the ones that the docker container expects,
-    # this is a safety precaution to make sure that the user does not accidentally
-    # set the port to something else.
+    
+    # Check that BUREAU_PORT_START is set to the default value
+    if [ "$BUREAU_PORT_START" != "5126" ]; then
+        echo "[./start.sh] BUREAU_PORT_START is not set to the expected value. This value must be 5126."
+        echo "[./start.sh] The passed BUREAU_PORT_START value will be ignored."
+        export BUREAU_PORT_START=5126
+    fi
 
-    export BUREAU_PORT_START=5126
-    export MAX_BUREAU=32
+    # Check that MAX_BUREAU is not above 32
+    if [ "$MAX_BUREAU" -gt "32" ]; then
+        echo "[./start.sh] MAX_BUREAU is set to a value above 32. This value must be 32 or below."
+        echo "[./start.sh] The passed MAX_BUREAU value will be ignored."
+        export MAX_BUREAU=32
+    fi
     
     # Check that the user has set the WORLD_WHITELIST environment variable
     # Not setting this variable on a public server is a big security risk.
