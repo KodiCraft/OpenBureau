@@ -18,6 +18,7 @@ function add(name: string): boolean {
     }
 
     var plugin = require(`../plugins/${name}`);
+    console.log(plugin)
     if (!isPlugin(plugin)) {
         Log.info(`PM: "${name}" is an invalid plugin module`);
         return false;
